@@ -3,7 +3,8 @@ local button1 = {x1 = 3, y1 = 3, x2 = 11, y2 =5, label = "click", bg = "0", fg =
 local button2 = {x1 = 23, y1 = 1, x2 = 23, y2 =1, label = "X", bg = "e", fg = "4"}
 local button3 = {x1 = 26, y1 = 3, x2 = 34, y2 =5, label = "don't", bg = "0", fg = "f"}
 local button4 = {x1 = 36, y1 = 1, x2 = 36, y2 =1, label = "X", bg = "e", fg = "4"}
-buttons1 = {button1, button2}
+local sw1 = {x1 = 3, y1 = 20, x2 = 11, y2 =22, label = "switch", bg = "8", fg = "f", active = false}
+buttons1 = {button1, button2, sw1}
 buttons2 = {button3, button4}
 local frame1 = {x1 = 1, y1 = 1, x2 = 23, y2 = 10, label = "main", bg = "e", fg = "0", bgin= "4", buttons = buttons1}
 local frame2 = {x1 = 24, y1 = 1, x2 = 36, y2 = 10, label = "dos", bg = "e", fg = "0", bgin= "4", buttons = buttons2}
@@ -62,7 +63,7 @@ function isInsideButton(x,y)
 				local tx = x >= frames[i]["buttons"][u].x1 and x <= frames[i]["buttons"][u].x2
 				local ty = y >= frames[i]["buttons"][u].y1 and y <= frames[i]["buttons"][u].y2
 				if tx and ty then
-					ret = {frame = i, button = frames[i]["buttons"][u]}
+					ret = {frame = i, button = frames[i]["buttons"][u], bin = u}
 					return ret
 				end
 			end
@@ -86,6 +87,16 @@ function waitForClick()
     local event, side, xPos, yPos = os.pullEvent("monitor_touch")
     local click = isInsideButton(xPos, yPos)
 		if click ~= nil then
+			if click.button.label == "switch" then
+				if click.button.active then
+					frames[click.frame]["buttons"][click.bin]["active"] = false
+					frames[click.frame]["buttons"][click.bin]["bg"] = "8"
+				else
+					frames[click.frame]["buttons"][click.bin]["active"] = true
+					frames[click.frame]["buttons"][click.bin]["bg"] = "5"
+				end
+				draw()
+			end
     	if click.button.label == "click" then
 				monitor.setTextColor(colors.white)
 				monitor.setCursorPos(4, 7)
