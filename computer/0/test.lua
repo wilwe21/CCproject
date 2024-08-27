@@ -89,9 +89,14 @@ function waitForClick()
 		if click ~= nil then
 			if click.button.label == "switch" then
 				if click.button.active then
+					frames[3] = nil
 					frames[click.frame]["buttons"][click.bin]["active"] = false
 					frames[click.frame]["buttons"][click.bin]["bg"] = "8"
 				else
+					local button5 = {x1 = 3, y1 = 13, x2 = 11, y2 =15, label = "sus", bg = "0", fg = "f"}
+					local buttons3 = {button5}
+					local frame3 = {x1 = 1, y1 = 11, x2 = 23, y2 = 20, label = "switcher", bg = "e", fg = "0", bgin= "4", buttons = buttons3}
+					frames[3] = frame3
 					frames[click.frame]["buttons"][click.bin]["active"] = true
 					frames[click.frame]["buttons"][click.bin]["bg"] = "5"
 				end
