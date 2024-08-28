@@ -4,11 +4,15 @@ local button2 = {x1 = 23, y1 = 1, x2 = 23, y2 =1, label = "X", bg = "e", fg = "4
 local button3 = {x1 = 26, y1 = 3, x2 = 34, y2 =5, label = "don't", bg = "0", fg = "f"}
 local button4 = {x1 = 36, y1 = 1, x2 = 36, y2 =1, label = "X", bg = "e", fg = "4"}
 local sw1 = {x1 = 3, y1 = 20, x2 = 11, y2 =22, label = "switch", bg = "8", fg = "f", active = false}
+local button6 = {x1 = 26, y1 = 12, x2 = 34, y2 =14, label = "sussy", bg = "0", fg = "f"}
+local button7 = {x1 = 36, y1 = 11, x2 = 36, y2 =11, label = "X", bg = "e", fg = "4"}
 buttons1 = {button1, button2, sw1}
 buttons2 = {button3, button4}
+buttons4 = {button6, button7}
 local frame1 = {x1 = 1, y1 = 1, x2 = 23, y2 = 10, label = "main", bg = "e", fg = "0", bgin= "4", buttons = buttons1}
 local frame2 = {x1 = 24, y1 = 1, x2 = 36, y2 = 10, label = "dos", bg = "e", fg = "0", bgin= "4", buttons = buttons2}
-frames = {frame1, frame2}
+local frame4 = {x1 = 24, y1 = 11, x2 = 36, y2 = 20, label = "quad", bg = "e", fg = "0", bgin= "4", buttons = buttons4}
+frames = {frame1, frame2, nil, frame4}
 
 function drawButton(button)
   monitor.setBackgroundColor(colors.fromBlit(button.bg))
@@ -88,15 +92,15 @@ function waitForClick()
     local click = isInsideButton(xPos, yPos)
 		if click ~= nil then
 			if click.button.label == "switch" then
+				local button5 = {x1 = 3, y1 = 13, x2 = 11, y2 =15, label = "sus", bg = "0", fg = "f"}
+				local buttons3 = {button5}
+				local frame3 = {x1 = 1, y1 = 11, x2 = 23, y2 = 20, label = "switcher", bg = "e", fg = "0", bgin= "4", buttons = buttons3}
 				if click.button.active then
-					frames[3] = nil
+					frames[#frames] = nil
 					frames[click.frame]["buttons"][click.bin]["active"] = false
 					frames[click.frame]["buttons"][click.bin]["bg"] = "8"
 				else
-					local button5 = {x1 = 3, y1 = 13, x2 = 11, y2 =15, label = "sus", bg = "0", fg = "f"}
-					local buttons3 = {button5}
-					local frame3 = {x1 = 1, y1 = 11, x2 = 23, y2 = 20, label = "switcher", bg = "e", fg = "0", bgin= "4", buttons = buttons3}
-					frames[3] = frame3
+					frames[#frames +1] = frame3
 					frames[click.frame]["buttons"][click.bin]["active"] = true
 					frames[click.frame]["buttons"][click.bin]["bg"] = "5"
 				end
@@ -120,6 +124,10 @@ function waitForClick()
 				monitor.clear()
     	  break
     	end
+		else
+			frames[#frames] = nil
+			frames[click.frame]["buttons"][click.bin]["active"] = false
+			frames[click.frame]["buttons"][click.bin]["bg"] = "8"
 		end
   end
 end
