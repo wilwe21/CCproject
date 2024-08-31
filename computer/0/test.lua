@@ -129,11 +129,9 @@ function waitForClick()
 			for i = 1, #frames do
 				if frames[i] ~= nil then
 					for j = 1, #frames[i]["buttons"] do
-						if frames[i]["buttons"][j] ~= nil then
-							if frames[i]["buttons"][j]["label"] == "switch" then
-								frames[i]["buttons"][j]["active"] = false
-								frames[i]["buttons"][j]["bg"] = "8"
-							end
+						if frames[i]["buttons"][j] ~= nil and frames[i]["buttons"][j]["label"] == "switch" then
+							frames[i]["buttons"][j]["active"] = false
+							frames[i]["buttons"][j]["bg"] = "8"
 						end
 					end
 				end
